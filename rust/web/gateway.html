@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="/icon.svg">
+<title>AI Gateway · PocketBridge</title>
+<style>
+:root{--bg:#f4f5f9;--card:#fff;--field:#f6f7fb;--text:#1d1d1f;--muted:#6e6e73;--line:#dfe2ea;--acc:#7c5cff;--ok:#16a34a;--warn:#d97706;--bad:#dc2626}
+@media (prefers-color-scheme:dark){:root{--bg:#1c1d22;--card:#25262e;--field:#1c1d22;--text:#eef0f6;--muted:#9a9db0;--line:#36384a;--ok:#34d399;--warn:#fbbf24;--bad:#f87171}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:32px 16px 60px;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text)}
+.back{align-self:center;width:min(560px,100%);margin-bottom:16px}
+.back a{color:var(--muted);text-decoration:none;font-size:14px}
+.back a:hover{color:var(--text)}
+.card{width:min(560px,100%);background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:0 20px 50px #0000000f}
+.head{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.head svg{width:52px;height:52px;flex:none}
+h1{margin:0;font-size:22px}
+.head p{margin:2px 0 0;color:var(--muted);font-size:14px}
+label{display:block;font-size:13px;font-weight:600;margin:18px 0 6px}
+input[type=url],input[type=password],input[type=text]{width:100%;padding:12px 14px;border-radius:11px;border:1px solid var(--line);background:var(--field);color:var(--text);font:14px ui-monospace,Consolas,monospace;outline:none}
+input:focus{border-color:var(--acc);box-shadow:0 0 0 3px #7c5cff33}
+.presets{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.presets button{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:5px 12px;font:inherit;font-size:12.5px;cursor:pointer}
+.presets button:hover{color:var(--text);border-color:var(--acc)}
+.keyrow{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:13px;color:var(--muted)}
+.save{width:100%;margin-top:22px;padding:13px;border:0;border-radius:12px;font:inherit;font-weight:600;font-size:15px;color:#fff;cursor:pointer;background:linear-gradient(135deg,#7c5cff,#5b8cff)}
+.save:disabled{opacity:.6}
+.msg{min-height:20px;margin-top:10px;font-size:13px;text-align:center}
+.use{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.use h2{font-size:14px;margin:0 0 10px}
+.row{display:flex;gap:8px}
+.row code{flex:1;padding:10px 12px;border-radius:10px;background:var(--field);border:1px solid var(--line);font:13px ui-monospace,Consolas,monospace;overflow-x:auto;white-space:nowrap}
+.row button{border:1px solid var(--line);background:transparent;color:var(--text);border-radius:10px;padding:0 12px;font:inherit;font-size:13px;cursor:pointer}
+.note{margin:10px 0 0;font-size:13px;color:var(--muted);line-height:1.5}
+.note.warn{color:var(--warn)}
+</style>
+</head>
+<body>
+<div class="back"><a href="/">← Beranda</a></div>
+<div class="card">
+  <div class="head">
+    <svg viewBox="0 0 84 84"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7C5CFF"/><stop offset="1" stop-color="#22C7E8"/></linearGradient></defs><circle cx="42" cy="42" r="42" fill="url(#g)"/><path d="M42 18l5.5 18.5L66 42l-18.5 5.5L42 66l-5.5-18.5L18 42l18.5-5.5z" fill="#fff"/></svg>
+    <div><h1>AI Gateway</h1><p>Teruskan request coding agent ke provider AI lewat internet HP.</p></div>
+  </div>
+
+  <label for="up">Upstream (alamat API provider)</label>
+  <input id="up" type="url" placeholder="https://api.openai.com/v1" autocomplete="off" spellcheck="false">
+  <div class="presets">
+    <button data-u="https://api.openai.com/v1">OpenAI</button>
+    <button data-u="https://openrouter.ai/api/v1">OpenRouter</button>
+    <button data-u="https://api.anthropic.com">Anthropic</button>
+    <button data-u="https://generativelanguage.googleapis.com/v1beta/openai">Gemini</button>
+    <button data-u="https://api.deepseek.com/v1">DeepSeek</button>
+  </div>
+
+  <label for="key">API key <span style="font-weight:400;color:var(--muted)">(opsional — disimpan di HP)</span></label>
+  <input id="key" type="password" placeholder="Kosong = pakai key dari coding agent" autocomplete="new-password" spellcheck="false">
+  <div class="keyrow" id="keyrow" hidden>
+    <span id="keyinfo"></span>
+    <label style="margin:0;font-weight:400;display:flex;gap:6px;align-items:center"><input type="checkbox" id="clear"> hapus key</label>
+  </div>
+
+  <button class="save" id="save">Simpan</button>
+  <div class="msg" id="msg"></div>
+
+  <div class="use">
+    <h2>Pakai di coding agent</h2>
+    <div class="row"><code id="base"></code><button data-copy="base">Salin</button></div>
+    <p class="note" id="keynote"></p>
+    <p class="note warn" id="warn" hidden>⚠ Belum ada password di HP — siapa pun di WiFi ini bisa memakai API key-mu. Setel password di aplikasi HP.</p>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const host = location.hostname;
+let cfg = null;
+
+function render(c) {
+  cfg = c;
+  $('up').value = c.upstream || '';
+  $('key').value = '';
+  $('clear').checked = false;
+  $('keyrow').hidden = !c.hasKey;
+  $('keyinfo').textContent = c.hasKey ? 'Key tersimpan ' + (c.keyHint || '') + ' — isi lagi untuk mengganti.' : '';
+  const v1 = /\/v1$/.test(c.upstream || '');
+  $('base').textContent = `http://${host}:${c.gatewayPort}` + (v1 ? '/v1' : '');
+  $('keynote').textContent = !c.hasKey
+    ? 'API key: pakai key aslimu di coding agent.'
+    : c.hasPassword
+      ? 'API key di coding agent: isi dengan password aplikasi (key asli tetap di HP).'
+      : 'API key di coding agent: isi apa saja (key asli disuntik oleh HP).';
+  $('warn').hidden = !(c.hasKey && !c.hasPassword);
+}
+
+function msg(text, color) { $('msg').textContent = text; $('msg').style.color = color || 'var(--muted)'; }
+
+async function load() {
+  const r = await fetch('/api/config', { cache: 'no-store' });
+  if (r.status === 401) { location.href = '/login'; return; }
+  render(await r.json());
+}
+
+$('save').onclick = async () => {
+  const body = { upstream: $('up').value.trim() };
+  const key = $('key').value.trim();
+  if (key) body.apiKey = key;
+  if ($('clear').checked) body.clearKey = true;
+  if (cfg && cfg.hasKey && !key && body.upstream.replace(/\/+$/, '') !== (cfg.upstream || '') &&
+      !confirm('Upstream diganti — key yang tersimpan akan dihapus demi keamanan. Lanjut?')) return;
+  $('save').disabled = true; msg('Menyimpan…');
+  try {
+    const r = await fetch('/api/config', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const j = await r.json();
+    if (!r.ok) { msg(j.error || 'Gagal menyimpan', 'var(--bad)'); return; }
+    render(j); msg('Tersimpan ✓', 'var(--ok)');
+  } catch (e) { msg('HP tidak terjangkau', 'var(--bad)'); }
+  finally { $('save').disabled = false; }
+};
+
+document.querySelectorAll('[data-u]').forEach(b => b.onclick = () => { $('up').value = b.dataset.u; $('up').focus(); });
+document.querySelectorAll('[data-copy]').forEach(b => b.onclick = () => {
+  const r = document.createRange(); r.selectNodeContents($(b.dataset.copy));
+  const s = getSelection(); s.removeAllRanges(); s.addRange(r); document.execCommand('copy'); s.removeAllRanges();
+  b.textContent = 'Tersalin'; setTimeout(() => b.textContent = 'Salin', 1500);
+});
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="/icon.svg">
+<title>Internet · PocketBridge</title>
+<style>
+:root{--bg:#f5f5f7;--card:#fff;--line:#d9d9de;--text:#1d1d1f;--muted:#6e6e73;--acc:#e0a500;--code:#f0f0f3;--ok:#34c759;--bad:#ff3b30}
+@media (prefers-color-scheme:dark){:root{--bg:#1c1c1e;--card:#2c2c2e;--line:#3a3a3c;--text:#f2f2f7;--muted:#a1a1a6;--acc:#ffc93c;--code:#1c1c1e}}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+.wrap{max-width:820px;margin:0 auto;padding:24px 20px 60px}
+nav{display:flex;gap:8px;margin-bottom:24px}
+nav a{color:var(--muted);text-decoration:none;font-size:14px;padding:6px 12px;border-radius:8px;border:1px solid var(--line)}
+nav a:hover{color:var(--text)}
+h1{font-size:30px;margin:0 0 6px}
+.lead{color:var(--muted);margin:0 0 20px}
+.status{display:inline-flex;align-items:center;gap:8px;font-size:13px;padding:6px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line);margin-bottom:24px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.dot.ok{background:var(--ok)}.dot.bad{background:var(--bad)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:16px}
+.card h2{font-size:17px;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+.card p{margin:6px 0 12px;color:var(--muted);font-size:14px}
+.tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--acc);color:#1d1d1f}
+.btn{display:inline-block;text-decoration:none;font-weight:600;font-size:15px;padding:11px 18px;border-radius:11px;background:var(--acc);color:#1d1d1f;border:0;cursor:pointer}
+.cmd{display:flex;gap:8px;align-items:stretch;margin-top:8px}
+code{flex:1;display:block;font:13px ui-monospace,SFMono-Regular,Consolas,monospace;background:var(--code);border:1px solid var(--line);border-radius:10px;padding:10px 12px;overflow-x:auto;white-space:nowrap}
+.copy{border:1px solid var(--line);background:transparent;color:var(--text);border-radius:10px;padding:0 12px;cursor:pointer;font:inherit;font-size:13px}
+ol{margin:6px 0 0;padding-left:20px;color:var(--muted);font-size:14px}
+ol b{color:var(--text)}
+details{margin-top:8px}summary{cursor:pointer;font-size:14px;color:var(--muted)}
+.step{margin:14px 0 10px!important;color:var(--text)!important}
+.hint{font-size:13px!important;margin:10px 0 0!important}
+.browsers{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.br{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 8px 12px;border:1px solid var(--line);border-radius:14px;text-decoration:none;color:var(--text);font-size:14px;font-weight:600;cursor:pointer;transition:.15s}
+.br:hover{border-color:var(--acc);transform:translateY(-2px);box-shadow:0 8px 20px #0002}
+.ic{width:48px;height:48px;border-radius:50%;position:relative;display:block}
+.ic-chrome{background:conic-gradient(from -60deg,#EA4335 0 120deg,#FBBC05 0 240deg,#34A853 0)}
+.ic-chrome:after{content:"";position:absolute;inset:13px;border-radius:50%;background:#4285F4;box-shadow:0 0 0 4px #fff}
+.ic-edge{background:linear-gradient(135deg,#35C1F1,#0C59A4 55%,#2BC56B)}
+.ic-edge:after{content:"";position:absolute;left:14px;top:18px;width:26px;height:18px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:#fff;opacity:.92}
+.ic-brave{border-radius:12px 12px 22px 22px;background:linear-gradient(160deg,#FF7A4D,#FB542B 60%,#D6361B);clip-path:polygon(18% 0,82% 0,100% 22%,92% 70%,50% 100%,8% 70%,0 22%)}
+.ic-brave:after{content:"";position:absolute;left:15px;top:14px;width:18px;height:20px;background:#fff;clip-path:polygon(50% 100%,0 25%,25% 0,75% 0,100% 25%)}
+.ic-firefox{background:conic-gradient(from 200deg,#FF980E,#FFBD4F,#FF3750,#9059FF,#FF980E)}
+.ic-firefox:after{content:"";position:absolute;inset:11px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#7542E5,#3A1F8C)}
+.pick{display:flex;gap:6px;margin:6px 0 4px}
+.pick button{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:6px 14px;font:inherit;font-size:13px;cursor:pointer}
+.pick button.on{background:var(--acc);border-color:var(--acc);color:#1d1d1f;font-weight:600}
+@media (max-width:560px){.browsers{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a href="/">← Beranda</a><a href="/notes">📝 Catatan</a><a href="/lite">🧪 Browser ringan</a></nav>
+  <h1>Internet lewat HP 🌐</h1>
+  <p class="lead">Buka jendela browser terpisah yang internetnya lewat HP — web app modern, login akun, upload &amp; download jalan normal. Jendela browser lain &amp; aplikasi di laptop tetap memakai koneksi biasanya.</p>
+  <div class="status"><span class="dot" id="dot"></span><span id="st">Mengecek proxy…</span></div>
+
+  <div class="card">
+    <h2>🪟 Windows <span class="tag">Paling mudah</span></h2>
+    <p class="step"><b>1. Pasang sekali</b> — unduh lalu jalankan. Tombol browser di bawah jadi aktif, dan muncul shortcut di Desktop &amp; Start Menu. Tidak perlu diulang walau IP HP berubah.</p>
+    <a class="btn" href="/launch/PocketBridge-Setup.bat" download>⬇ Unduh PocketBridge-Setup.bat</a>
+    <p class="step"><b>2. Klik browser</b> — terbuka jendela baru (profil khusus) yang internetnya lewat HP. Login di jendela itu tersimpan untuk pemakaian berikutnya.</p>
+    <div class="browsers">
+      <a class="br" data-b="chrome"><span class="ic ic-chrome"></span>Chrome</a>
+      <a class="br" data-b="edge"><span class="ic ic-edge"></span>Edge</a>
+      <a class="br" data-b="brave"><span class="ic ic-brave"></span>Brave</a>
+      <a class="br" data-b="firefox"><span class="ic ic-firefox"></span>Firefox</a>
+    </div>
+    <p class="hint">Browser tidak terbuka? Jalankan setup di langkah 1 dulu. Browser akan bertanya “Buka PocketBridge?” — centang <i>selalu izinkan</i>.</p>
+    <details><summary>Hapus dari Windows</summary>
+      <div class="cmd"><code id="uninst"></code><button class="copy" data-for="uninst">Salin</button></div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>🍎 macOS &amp; 🐧 Linux</h2>
+    <div class="pick" id="pick">
+      <button data-b="chrome" class="on">Chrome</button><button data-b="edge">Edge</button><button data-b="brave">Brave</button>
+    </div>
+    <p>macOS — tempel di Terminal:</p>
+    <div class="cmd"><code id="mac"></code><button class="copy" data-for="mac">Salin</button></div>
+    <p>Linux:</p>
+    <div class="cmd"><code id="linux"></code><button class="copy" data-for="linux">Salin</button></div>
+  </div>
+
+  <div class="card">
+    <h2>🦊 Firefox (semua OS)</h2>
+    <ol>
+      <li>Settings → General → <b>Network Settings</b> → Settings…</li>
+      <li>Pilih <b>Manual proxy configuration</b></li>
+      <li>HTTP Proxy: <b id="ffhost"></b> Port: <b>8888</b>, centang <b>Also use this proxy for HTTPS</b></li>
+    </ol>
+    <p>Atau pakai <b>Automatic proxy configuration URL</b>:</p>
+    <div class="cmd"><code id="pac"></code><button class="copy" data-for="pac">Salin</button></div>
+  </div>
+
+  <div class="card">
+    <h2>🔑 Password</h2>
+    <p>Komputer yang sudah login di halaman ini otomatis diizinkan memakai proxy. Kalau browser tetap minta login proxy: username bebas, password = password aplikasi.</p>
+  </div>
+</div>
+<script>
+const host = location.hostname, proxy = 'http://' + host + ':8888';
+const set = (id, s) => document.getElementById(id).textContent = s;
+set('uninst', `powershell -NoProfile -ExecutionPolicy Bypass -File "%LOCALAPPDATA%\\PocketBridge\\launch.ps1" -Uninstall`);
+set('ffhost', host);
+
+// Windows: pocketbridge:// links are handled by the launcher installed in step 1.
+document.querySelectorAll('.br').forEach(a => a.href = `pocketbridge://${a.dataset.b}/?host=${encodeURIComponent(host)}`);
+
+// macOS / Linux commands for the selected Chromium browser.
+const APPS = {
+  chrome: { mac: 'Google Chrome', linux: 'google-chrome' },
+  edge: { mac: 'Microsoft Edge', linux: 'microsoft-edge' },
+  brave: { mac: 'Brave Browser', linux: 'brave-browser' },
+};
+function commands(b) {
+  const dir = `$HOME/.pocketbridge-${b}`;
+  set('mac', `open -na "${APPS[b].mac}" --args --user-data-dir="${dir}" --proxy-server="${proxy}" https://www.google.com/`);
+  set('linux', `${APPS[b].linux} --user-data-dir="${dir}" --proxy-server="${proxy}" https://www.google.com/ &`);
+}
+document.querySelectorAll('#pick button').forEach(btn => btn.onclick = () => {
+  document.querySelectorAll('#pick button').forEach(x => x.classList.toggle('on', x === btn));
+  commands(btn.dataset.b);
+});
+commands('chrome');
+set('pac', location.origin + '/proxy.pac');
+
+document.querySelectorAll('.copy').forEach(b => b.onclick = () => {
+  const el = document.getElementById(b.dataset.for);
+  const r = document.createRange(); r.selectNodeContents(el);
+  const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+  document.execCommand('copy'); s.removeAllRanges();
+  b.textContent = 'Tersalin'; setTimeout(() => b.textContent = 'Salin', 1500);
+});
+
+const dot = document.getElementById('dot');
+fetch(proxy + '/', { mode: 'no-cors', cache: 'no-store' })
+  .then(() => { dot.className = 'dot ok'; set('st', 'Proxy aktif di ' + host + ':8888'); })
+  .catch(() => { dot.className = 'dot bad'; set('st', 'Proxy 8888 tidak terjangkau dari komputer ini'); });
+</script>
+</body>
+</html>

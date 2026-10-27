@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PocketBridge"
+            android:textColor="@color/text"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="Catatan bersama, internet &amp; AI gateway lewat HP"
+            android:textColor="@color/muted"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Server"
+                    android:textColor="@color/text"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="○ Mati"
+                    android:textColor="@color/muted"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <Switch
+                android:id="@+id/sw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:scaleX="1.4"
+                android:scaleY="1.4" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_card"
+            android:fontFamily="monospace"
+            android:lineSpacingExtra="4dp"
+            android:padding="16dp"
+            android:textColor="@color/text"
+            android:textIsSelectable="true"
+            android:textSize="17sp" />
+
+        <TextView
+            style="@style/Section"
+            android:text="🔒 Password (web, proxy &amp; gateway)" />
+
+        <EditText
+            android:id="@+id/etPass"
+            style="@style/Field"
+            android:hint="Kosongkan = tanpa password"
+            android:inputType="textPassword" />
+
+        <TextView
+            style="@style/Section"
+            android:text="🤖 AI Gateway — port 8090" />
+
+        <EditText
+            android:id="@+id/etUpstream"
+            style="@style/Field"
+            android:hint="Upstream, mis. https://api.openai.com/v1"
+            android:inputType="textUri" />
+
+        <EditText
+            android:id="@+id/etKey"
+            style="@style/Field"
+            android:layout_marginTop="8dp"
+            android:hint="API key (opsional, disuntik oleh HP)"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Di coding agent: base URL = http://IP-HP:8090. Jika API key diisi di sini, agent cukup pakai password aplikasi sebagai API key."
+            android:textColor="@color/muted"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_button"
+            android:text="Simpan pengaturan"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+</ScrollView>

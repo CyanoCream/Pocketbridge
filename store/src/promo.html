@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B0D17;--text:#F4F5FB;--muted:#A3A8C7;--acc:#7C5CFF;--acc2:#22C7E8}
+*{box-sizing:border-box;margin:0}
+html,body{width:1080px;height:1920px;overflow:hidden}
+body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:var(--text);
+  background:radial-gradient(900px 700px at 0% 0%,#3B2A9A88,transparent 70%),radial-gradient(800px 700px at 100% 100%,#0E6E8C77,transparent 70%),var(--bg)}
+.slide{display:none;position:relative;width:1080px;height:1920px;overflow:hidden}
+.slide.on{display:block}
+.head{padding:130px 90px 0}
+.brand{display:flex;align-items:center;gap:16px;font-weight:700;font-size:30px;color:var(--muted);margin-bottom:44px}
+.brand img{width:56px;height:56px;border-radius:16px}
+h1{font-size:84px;line-height:1.08;font-weight:800;letter-spacing:-1.5px;white-space:pre-line}
+h1 em{font-style:normal;background:linear-gradient(90deg,#B3A2FF,var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{margin-top:30px;font-size:36px;line-height:1.45;color:var(--muted);font-weight:500;max-width:880px}
+
+.phone{position:absolute;background:#05060A;border-radius:78px;padding:20px;box-shadow:0 60px 120px #0009,0 0 0 2px #2A2E45 inset}
+.phone .scr{border-radius:60px;overflow:hidden;position:relative}
+.phone .bar{height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 44px;font:600 24px "Plus Jakarta Sans";color:#fff}
+.phone .bar i{font-style:normal;letter-spacing:4px;font-size:18px}
+.phone img{display:block;width:100%}
+.laptop{position:absolute}
+.laptop .lid{background:#16171D;border-radius:26px 26px 0 0;padding:18px 18px 22px;box-shadow:0 60px 120px #0009,0 0 0 2px #2A2E45 inset}
+.laptop .lid img{display:block;width:100%;border-radius:8px}
+.laptop .base{height:30px;margin:0 -60px;background:linear-gradient(#C9CBD6,#8C8FA0);border-radius:0 0 30px 30px;position:relative}
+.laptop .base:before{content:"";position:absolute;left:50%;top:0;width:180px;height:12px;transform:translateX(-50%);background:#A6A9B8;border-radius:0 0 12px 12px}
+.chip{position:absolute;display:flex;align-items:center;gap:14px;padding:20px 30px;border-radius:999px;background:#151A2FEE;border:2px solid #2D3354;font-weight:700;font-size:32px;box-shadow:0 20px 50px #0008}
+.chip b{width:16px;height:16px;border-radius:50%;background:#34D399;box-shadow:0 0 14px #34D399}
+.term{position:absolute;left:90px;right:90px;background:#0F1220;border:2px solid #2A2F4A;border-radius:28px;box-shadow:0 50px 100px #0009;overflow:hidden}
+.term .tb{display:flex;gap:12px;padding:22px 26px;background:#161A2D}
+.term .tb span{width:18px;height:18px;border-radius:50%}
+.term pre{padding:34px 40px 40px;font:500 25px/1.7 "Cascadia Code",Consolas,ui-monospace,monospace;color:#D6D9F0;white-space:pre-wrap}
+.c{color:#6E7499}.k{color:#7DD3FC}.v{color:#C4B5FD}.g{color:#86EFAC}
+.arc{position:absolute;pointer-events:none}
+</style>
+</head>
+<body>
+
+<!-- 1: app -->
+<section class="slide" id="s1">
+  <div class="head">
+    <div class="brand"><img src="../out/icon-512.png">PocketBridge</div>
+    <h1 data-t="h1"></h1><p class="sub" data-t="s1"></p>
+  </div>
+  <div class="phone" style="left:170px;top:780px;width:740px">
+    <div class="scr" style="background:#0B0D17"><div class="bar"><span>9:41</span><i>●●● ▮</i></div><img src="shot-app.png"></div>
+  </div>
+</section>
+
+<!-- 2: notes sync desktop + phone -->
+<section class="slide" id="s2">
+  <div class="head">
+    <div class="brand"><img src="../out/icon-512.png">PocketBridge</div>
+    <h1 data-t="h2"></h1><p class="sub" data-t="s2"></p>
+  </div>
+  <div class="laptop" style="left:90px;top:860px;width:960px">
+    <div class="lid"><img src="shot-notes-desktop.png"></div><div class="base"></div>
+  </div>
+  <div class="phone" style="left:610px;top:1180px;width:390px;border-radius:52px;padding:12px">
+    <div class="scr" style="border-radius:42px;background:#232325"><img src="shot-notes-mobile.png"></div>
+  </div>
+  <div class="chip" style="left:90px;top:1560px"><b></b><span data-t="c2"></span></div>
+</section>
+
+<!-- 3: notes app on phones -->
+<section class="slide" id="s3">
+  <div class="head">
+    <div class="brand"><img src="../out/icon-512.png">PocketBridge</div>
+    <h1 data-t="h3"></h1><p class="sub" data-t="s3"></p>
+  </div>
+  <div class="phone" style="left:70px;top:820px;width:470px;transform:rotate(-4deg)">
+    <div class="scr" style="background:#232325"><div class="bar"><span>9:41</span><i>●●● ▮</i></div><img src="shot-notes-mobile.png"></div>
+  </div>
+  <div class="phone" style="left:545px;top:880px;width:470px;transform:rotate(4deg)">
+    <div class="scr" style="background:#1C1C1E"><div class="bar"><span>9:41</span><i>●●● ▮</i></div><img src="shot-editor-mobile.png"></div>
+  </div>
+</section>
+
+<!-- 4: internet through the phone -->
+<section class="slide" id="s4">
+  <div class="head">
+    <div class="brand"><img src="../out/icon-512.png">PocketBridge</div>
+    <h1 data-t="h4"></h1><p class="sub" data-t="s4"></p>
+  </div>
+  <div class="laptop" style="left:90px;top:900px;width:900px">
+    <div class="lid"><img src="shot-internet-crop.png"></div><div class="base"></div>
+  </div>
+  <div class="chip" style="left:90px;top:1590px"><b></b><span data-t="c4a"></span></div>
+  <div class="chip" style="left:560px;top:1590px"><b></b><span data-t="c4b"></span></div>
+  <div class="chip" style="left:260px;top:1720px"><b></b><span data-t="c4"></span></div>
+</section>
+
+<!-- 5: AI gateway -->
+<section class="slide" id="s5">
+  <div class="head">
+    <div class="brand"><img src="../out/icon-512.png">PocketBridge</div>
+    <h1 data-t="h5"></h1><p class="sub" data-t="s5"></p>
+  </div>
+  <div class="term" style="top:860px">
+    <div class="tb"><span style="background:#FF5F57"></span><span style="background:#FEBC2E"></span><span style="background:#28C840"></span></div>
+    <pre data-t="t5"></pre>
+  </div>
+  <div class="chip" style="left:90px;top:1640px"><b></b><span data-t="c5a"></span></div>
+  <div class="chip" style="left:90px;top:1760px"><b></b><span data-t="c5b"></span></div>
+</section>
+
+<script>
+const T = {
+  id: {
+    h1: 'Satu tombol\n<em>HP jadi jembatan</em>',
+    s1: 'Nyalakan server, alamat langsung muncul. Buka dari laptop di WiFi atau hotspot yang sama.',
+    h2: 'Catatan yang <em>sinkron</em>\nke semua komputer',
+    s2: 'Tempel di laptop A, langsung muncul di laptop B. Tanpa akun, tanpa cloud.',
+    c2: 'Tersinkron otomatis',
+    h3: 'Rapi seperti\n<em>aplikasi Notes</em>',
+    s3: 'Daftar catatan, pencarian, auto-save, dan mode gelap — bisa dibuka dari browser mana saja.',
+    h4: 'Internet HP\n<em>untuk laptopmu</em>',
+    s4: 'Satu klik membuka jendela browser khusus yang internetnya lewat HP.',
+    c4: 'Aplikasi lain tetap normal',
+    c4a: 'Web app modern',
+    c4b: 'Login akun',
+    h5: 'AI gateway untuk\n<em>coding agent</em>',
+    s5: 'Arahkan base URL agent ke HP. API key cukup disimpan di HP.',
+    t5: '<span class="c"># di laptop</span>\n<span class="k">export</span> OPENAI_BASE_URL=<span class="v">http://192.168.43.1:8090/v1</span>\n<span class="k">export</span> OPENAI_API_KEY=<span class="v">&lt;password-aplikasi&gt;</span>\n\n<span class="g">$</span> coding-agent\n<span class="c">✓ terhubung lewat PocketBridge · streaming aktif</span>',
+    c5a: 'Provider AI berbasis HTTP',
+    c5b: 'Streaming SSE didukung',
+  },
+  en: {
+    h1: 'One switch turns your\n<em>phone into a bridge</em>',
+    s1: 'Start the server and get an address. Open it from any laptop on the same Wi-Fi or hotspot.',
+    h2: 'Notes that <em>sync</em>\nacross computers',
+    s2: 'Paste on laptop A, it appears on laptop B. No account, no cloud.',
+    c2: 'Synced automatically',
+    h3: 'Clean like a\n<em>Notes app</em>',
+    s3: 'Note list, search, auto-save and dark mode — open it from any browser.',
+    h4: 'Your phone’s internet\n<em>on your laptop</em>',
+    s4: 'One click opens a dedicated browser window that goes online through your phone.',
+    c4: 'Other apps stay unchanged',
+    c4a: 'Modern web apps',
+    c4b: 'Account sign-in',
+    h5: 'AI gateway for\n<em>coding agents</em>',
+    s5: 'Point your agent’s base URL at the phone. Keep the API key on the phone.',
+    t5: '<span class="c"># on your laptop</span>\n<span class="k">export</span> OPENAI_BASE_URL=<span class="v">http://192.168.43.1:8090/v1</span>\n<span class="k">export</span> OPENAI_API_KEY=<span class="v">&lt;app-password&gt;</span>\n\n<span class="g">$</span> coding-agent\n<span class="c">✓ connected via PocketBridge · streaming on</span>',
+    c5a: 'Any HTTP-based AI provider',
+    c5b: 'SSE streaming supported',
+  },
+};
+const q = new URLSearchParams(location.search);
+const lang = T[q.get('lang')] ? q.get('lang') : 'id';
+document.querySelectorAll('[data-t]').forEach(e => e.innerHTML = T[lang][e.dataset.t]);
+document.getElementById('s' + (q.get('s') || '1')).classList.add('on');
+</script>
+</body>
+</html>

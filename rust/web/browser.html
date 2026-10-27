@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="/icon.svg">
+<title>Browser · PocketBridge</title>
+<style>
+:root{--bg:#0b0d17;--card:#141829;--line:#262b45;--text:#e8eaf6;--muted:#8b90b0;--acc:#7c5cff;--acc2:#22d3ee}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{display:flex;flex-direction:column;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text)}
+.top{display:flex;align-items:center;gap:6px;padding:8px 10px;background:var(--card);border-bottom:1px solid var(--line)}
+.logo{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--acc),var(--acc2));display:grid;place-items:center;font-weight:800;text-decoration:none;color:#fff;flex:none}
+.ib{width:34px;height:34px;flex:none;display:grid;place-items:center;border-radius:9px;border:1px solid transparent;background:transparent;color:var(--text);font-size:16px;cursor:pointer}
+.ib:hover{background:#1d2238;border-color:var(--line)}
+form{flex:1;display:flex;gap:6px;min-width:0}
+.url{flex:1;min-width:0;display:flex;align-items:center;background:#0e1122;border:1px solid var(--line);border-radius:999px;padding:0 6px 0 14px}
+.url:focus-within{border-color:var(--acc);box-shadow:0 0 0 3px #7c5cff33}
+.url input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:var(--text);font:14px system-ui;padding:9px 0}
+select{background:#1d2238;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 8px;font:12px system-ui;outline:0}
+.go{border:0;border-radius:999px;padding:0 16px;color:#fff;font-weight:600;cursor:pointer;background:linear-gradient(135deg,var(--acc),#5b8cff)}
+.progress{height:2px;background:linear-gradient(90deg,var(--acc),var(--acc2));width:0;transition:width .4s,opacity .3s;opacity:0}
+.progress.on{width:80%;opacity:1;transition:width 8s cubic-bezier(.1,.7,.2,1)}
+iframe{flex:1;width:100%;border:0;background:#fff}
+.hint{font-size:11px;color:var(--muted);padding:4px 12px;background:var(--card);border-top:1px solid var(--line)}
+.hint b{color:var(--text)}
+</style>
+</head>
+<body>
+<div class="top">
+  <a href="/setup" title="Kembali"><img class="logo" src="/icon.svg" alt=""></a>
+  <button class="ib" id="back" title="Kembali">←</button>
+  <button class="ib" id="fwd" title="Maju">→</button>
+  <button class="ib" id="reload" title="Muat ulang">⟳</button>
+  <button class="ib" id="home" title="Beranda">⌂</button>
+  <form id="f">
+    <div class="url">
+      <input id="u" placeholder="Cari atau ketik URL…" autocomplete="off" spellcheck="false">
+      <select id="eng" title="Mesin pencari">
+        <option value="https://html.duckduckgo.com/html/?q=">DuckDuckGo</option>
+        <option value="https://www.google.com/search?q=">Google</option>
+        <option value="https://www.bing.com/search?q=">Bing</option>
+      </select>
+    </div>
+    <button class="go" type="submit">Buka</button>
+  </form>
+  <button class="ib" id="ext" title="Buka di tab penuh">↗</button>
+</div>
+<div class="progress" id="pg"></div>
+<iframe id="v" sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-downloads allow-modals"></iframe>
+<div class="hint">Mode ringan: hanya untuk situs sederhana/artikel. Untuk ChatGPT, Gemini, dll pakai <a href="/setup" style="color:inherit"><b>Internet lewat HP</b></a>.</div>
+<script>
+const $ = id => document.getElementById(id);
+const v = $('v'), u = $('u'), eng = $('eng'), pg = $('pg');
+const HOME = 'https://html.duckduckgo.com/html/';
+
+function store(k,val){try{localStorage.setItem(k,val)}catch(e){}}
+function read(k){try{return localStorage.getItem(k)}catch(e){return null}}
+
+function toUrl(s){
+  s=s.trim();
+  if(!s)return HOME;
+  if(/^https?:\/\//i.test(s))return s;
+  if(/^[^\s]+\.[a-z]{2,}(:\d+)?(\/\S*)?$/i.test(s))return 'https://'+s;
+  return eng.value+encodeURIComponent(s);
+}
+function go(s){
+  const target=toUrl(s);
+  u.value=target;
+  pg.classList.add('on');
+  v.src='/p?u='+encodeURIComponent(target);
+}
+
+$('f').onsubmit=e=>{e.preventDefault();go(u.value);v.focus()};
+$('back').onclick=()=>{try{v.contentWindow.history.back()}catch(e){}};
+$('fwd').onclick=()=>{try{v.contentWindow.history.forward()}catch(e){}};
+$('reload').onclick=()=>{pg.classList.add('on');try{v.contentWindow.location.reload()}catch(e){go(u.value)}};
+$('home').onclick=()=>go(HOME);
+$('ext').onclick=()=>window.open('/p?u='+encodeURIComponent(toUrl(u.value)),'_blank');
+eng.onchange=()=>store('pb_engine',eng.value);
+v.onload=()=>pg.classList.remove('on');
+
+window.addEventListener('message',e=>{
+  const d=e.data;
+  if(!d||!d.pb)return;
+  if(document.activeElement!==u)u.value=d.url;
+  document.title=(d.title||'Browser')+' · PocketBridge';
+  store('pb_last',d.url);
+});
+
+const savedEng=read('pb_engine');if(savedEng)eng.value=savedEng;
+const fromHash=decodeURIComponent((location.hash.match(/^#u=(.+)$/)||[])[1]||'');
+go(fromHash||read('pb_last')||HOME);
+</script>
+</body>
+</html>

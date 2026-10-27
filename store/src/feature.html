@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+html,body{width:1024px;height:500px;overflow:hidden}
+body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:#F4F5FB;position:relative;
+  background:radial-gradient(600px 420px at 0% 0%,#4B33C9aa,transparent 70%),radial-gradient(600px 480px at 100% 100%,#0E7E9Faa,transparent 70%),#0B0D17}
+.left{position:absolute;left:64px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;width:470px}
+.left img{width:96px;height:96px;border-radius:26px;box-shadow:0 20px 50px #0008;margin-bottom:26px}
+h1{font-size:56px;font-weight:800;letter-spacing:-1px}
+p{margin-top:12px;font-size:23px;line-height:1.45;color:#B4B9D6;font-weight:500}
+.laptop{position:absolute;left:520px;top:92px;width:430px}
+.lid{background:#16171D;border-radius:14px 14px 0 0;padding:9px 9px 11px;box-shadow:0 30px 60px #0009,0 0 0 1px #2A2E45 inset}
+.lid img{display:block;width:100%;border-radius:4px}
+.base{height:15px;margin:0 -28px;background:linear-gradient(#C9CBD6,#8C8FA0);border-radius:0 0 15px 15px}
+.phone{position:absolute;left:840px;top:170px;width:150px;background:#05060A;border-radius:26px;padding:7px;box-shadow:0 30px 60px #000a,0 0 0 1px #2A2E45 inset}
+.phone img{display:block;width:100%;border-radius:20px}
+svg{position:absolute;left:0;top:0}
+</style>
+</head>
+<body>
+<svg width="1024" height="500"><path d="M700,92 Q800,10 905,165" fill="none" stroke="#9F8CFF" stroke-width="4" stroke-dasharray="2 12" stroke-linecap="round"/></svg>
+<div class="left">
+  <img src="../out/icon-512.png">
+  <h1>PocketBridge</h1>
+  <p id="t"></p>
+</div>
+<div class="laptop"><div class="lid"><img src="shot-notes-desktop.png"></div><div class="base"></div></div>
+<div class="phone"><img src="shot-app.png"></div>
+<script>
+const T={id:'Catatan bersama, internet &amp; AI gateway — lewat HP-mu, di jaringan lokal.',en:'Shared notes, internet &amp; AI gateway — through your phone, on your local network.'};
+document.getElementById('t').innerHTML=T[new URLSearchParams(location.search).get('lang')]||T.id;
+</script>
+</body>
+</html>

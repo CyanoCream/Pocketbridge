@@ -1,0 +1,13 @@
+.gradle/
+build/
+local.properties
+.idea/
+*.iml
+.kotlin/
+app/src/main/jniLibs/
+keystore/
+keystore.properties
+rust/target/
+release/
+store/src/*.png
+*.log
